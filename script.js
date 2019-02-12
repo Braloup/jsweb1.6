@@ -1,4 +1,3 @@
-
 // import some polyfill to ensure everything works OK
 import "babel-polyfill"
 
@@ -11,12 +10,35 @@ import 'bootstrap';
 
 console.log("Hey look in your browser console. It works!");
 
-let photos = [];
+import images from "./images/*.jpg";
 
-let cat1 = new Image();
-cat1.src = 'images/cat1.jpg';
-photos.push(cat1);
+let imgArr = Object.keys(images);
 
-let cat2 = new Image();
-cat2.src = 'images/cat2.jpeg';
-photos.push(cat2);
+let i = 1;
+
+while (i <= imgArr.length) {
+
+  document.getElementById("cat" + i).src = images["cat" + i];
+  i++;
+}
+
+let shufleArr = (imgArr) => {
+
+  for (let i = imgArr - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let temporary = imgArr[i];
+    imgArr[i] = imgArr[j];
+    imgArr[j] = temporary;
+  }
+}
+
+let random = () => {
+
+  shufleArr(imgArr);
+
+  for(let i = 1; i < imgArr.length; i++) {
+    document.getElementById("cat" + i).src =  images[imgArr[i]];
+  }
+}
+
+document.getElementById("random").addEventListener("click",() => random());
